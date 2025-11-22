@@ -1,61 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projects</title>
-    <meta name="google" content="notranslate">
+    <meta name="google" content="notranslate" />
     <style>
         body {
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            padding: 40px;
             background-color: #f9f9f9;
             font-family: Arial, sans-serif;
-            color: #333; 
-            box-sizing: border-box;
-        }
-        .center-text {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        .center-text .name {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .center-text .links {
-            font-size: 1.2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 25px 0;
-        }
-        .center-text .links a {
-            margin: 0 15px;
-            text-decoration: none;
             color: #333;
-            margin-bottom: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
         }
-        .center-text .links a:hover {
-            color: #878787; 
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .project-card {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+
+        .project-title {
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="center-text">
-        <div class="links">
-            <a href="https://armandterasmus.github.io/PortfolioWebsite/projects/basic_ml_projects.html">Simple Machine Learning Projects</a>
-            <a href="https://github.com/ArmandtErasmus/stochastic_modeling_multi_asset_portfolio_monte_carlo" target="_blank">Stochastic Modeling of the Future Value of a Single and Multi-Asset Portfolio Using a Geometric Brownian Motion Algorithm</a>
-            <a href="https://github.com/ArmandtErasmus/black_scholes_options_pricing" target="_blank">A Visual Framework for Pricing and Sensitivity Analysis of European Options</a>
-            <a href="https://github.com/ArmandtErasmus/logistic_regression_based_breast_cancer_classification" target="_blank">Logistic Regression Based Breast Cancer Classification</a> 
-        </div>
+    <div class="grid">
+        <a class="project-card" href="https://armandterasmus.github.io/PortfolioWebsite/projects/basic_ml_projects.html">
+            <img src="images/ml_basic.png" alt="Simple ML Projects" />
+            <div class="project-title">Simple Machine Learning Projects</div>
+        </a>
+
+        <a class="project-card" href="https://github.com/ArmandtErasmus/stochastic_modeling_multi_asset_portfolio_monte_carlo" target="_blank">
+            <img src="images/gbm_portfolio.png" alt="GBM Portfolio Modeling" />
+            <div class="project-title">Stochastic Modeling of Multi‑Asset Portfolios</div>
+        </a>
+
+        <a class="project-card" href="https://github.com/ArmandtErasmus/black_scholes_options_pricing" target="_blank">
+            <img src="images/black_scholes.jpg" alt="Options Pricing" />
+            <div class="project-title">European Options Pricing & Sensitivity Analysis</div>
+        </a>
+
+        <a class="project-card" href="https://github.com/ArmandtErasmus/logistic_regression_based_breast_cancer_classification" target="_blank">
+            <img src="images/breast_cancer.png" alt="Breast Cancer Classification" />
+            <div class="project-title">Breast Cancer Detection (Logistic Regression)</div>
+        </a>
     </div>
 </body>
 </html>
