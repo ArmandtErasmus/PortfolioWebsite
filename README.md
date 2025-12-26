@@ -1,3 +1,3 @@
 # Portfolio Website
 
-- Contains my social links, resume and past projects.
+- Contains my social links, resume and past projects. :)
