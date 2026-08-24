@@ -1,57 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Machine Learning Projects</title>
-    <meta name="google" content="notranslate">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic ML Projects · Armandt Erasmus</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <meta name="google" content="notranslate" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet" />
     <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #d9d9d9;
+            --muted: #b3b3b3;
+            --outline: #595959;
+            --chip-bg: rgba(82, 82, 91, 0.4);
+
+            --display: "Bebas Neue", "Arial Narrow", sans-serif;
+            --body: "Inter", system-ui, -apple-system, sans-serif;
+
+            --heading-size: clamp(2.5rem, 8vw, 4.5rem);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar { width: 0; height: 0; display: none; }
         body {
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
+            background-color: var(--bg);
+            background-image: linear-gradient(180deg, #161618 0%, #111113 30%, #0a0a0a 1300px);
+            background-repeat: no-repeat;
+            color: var(--text);
+            font-family: var(--body);
+            font-weight: 400;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            font-size: clamp(0.875rem, 0.05vw + 0.86rem, 0.95rem);
+        }
+        /* grain overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.2;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4.86' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        ::selection { background: #d9d9d9; color: #0a0a0a; }
+        a { color: inherit; text-decoration: none; }
+
+        .wrap { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+        /* back link */
+        .back {
+            display: inline-flex;
             align-items: center;
-            height: 100vh;
-            background-color: #f9f9f9;
-            font-family: Arial, sans-serif;
-            color: #333; 
-            box-sizing: border-box;
+            gap: 0.4rem;
+            border: 1px solid var(--outline);
+            border-radius: 4px;
+            padding: 0.28rem 0.7rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
         }
-        .center-text {
-            text-align: center;
+        .back:hover { color: var(--text); border-color: var(--text); background: var(--chip-bg); }
+        .back svg { width: 13px; height: 13px; transition: transform 0.2s ease; }
+        .back:hover svg { transform: translateX(-2px); }
+
+        /* heading */
+        .head { position: relative; margin: 2.5rem 0 2rem; }
+        .head .bracket {
+            position: absolute; right: 0; top: 0.3rem;
+            width: 1.25rem; height: 1.25rem;
+            border-top: 1px solid var(--outline);
+            border-right: 1px solid var(--outline);
+        }
+        .head h1 {
+            font-family: var(--display);
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: var(--heading-size);
+            line-height: 1;
+            letter-spacing: 0.04em;
+            margin: 0 0 0.75rem;
+        }
+        .head p { color: var(--muted); font-weight: 300; margin: 0; max-width: 60ch; }
+
+        /* link list */
+        .list { display: flex; flex-direction: column; }
+        .list a {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--outline);
+            color: var(--text);
+            font-weight: 300;
+            transition: color 0.2s ease, padding-left 0.2s ease;
         }
-        .center-text .name {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .center-text .links {
-            font-size: 1.2rem;
-        }
-        .center-text .links a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #333;
-            
-        }
-        .center-text .links a:hover {
-            color: #878787; 
-        }
+        .list a:first-child { border-top: 1px solid var(--outline); }
+        .list a:hover { color: #fff; padding-left: 0.5rem; }
+        .list a svg { width: 15px; height: 15px; color: var(--muted); flex: none; transition: transform 0.2s ease, color 0.2s ease; }
+        .list a:hover svg { color: var(--text); transform: translate(2px, -2px); }
     </style>
 </head>
 <body>
-    <div class="center-text">
-        <div class="links">
-            <a href="https://drive.google.com/file/d/1TbvKIRXX006QE1tK3oFacyDh-omSZT1e/view?usp=sharing" target="_blank">Multiple Linear Regression</a>
-            <a href="https://drive.google.com/file/d/1mN4R5Yx3w96Gvk8dwhzPw3s2ngMS6i5B/view?usp=sharing" target="_blank">Stock Price Prediction: Monte Carlo</a> 
-            <a href="https://drive.google.com/file/d/1zsopAVKMNhw6gQEHS_ViXqk40WUfzkrc/view?usp=sharing" target="_blank">Principle Component Analysis</a>
-            <a href="https://drive.google.com/file/d/1kASTVYCEFHkL6kQNvpUP2AjolGuqtweY/view?usp=sharing" target="_blank">Decision Tree Classifier</a>
-            <a href="https://drive.google.com/file/d/1bpw5euJpDkL_8jcCp-gx22wxEaO_r5KK/view?usp=sharing" target="_blank">KNN Classifier</a>
+    <div class="wrap">
+        <a href="projects.html" class="back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Projects
+        </a>
+
+        <div class="head">
+            <span class="bracket"></span>
+            <h1>Basic ML Projects</h1>
+            
+        </div>
+
+        <div class="list">
+            <a href="https://drive.google.com/file/d/1TbvKIRXX006QE1tK3oFacyDh-omSZT1e/view?usp=sharing" target="_blank" rel="noopener">
+                Multiple Linear Regression
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            <a href="https://drive.google.com/file/d/1mN4R5Yx3w96Gvk8dwhzPw3s2ngMS6i5B/view?usp=sharing" target="_blank" rel="noopener">
+                Stock Price Prediction: Monte Carlo
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            <a href="https://drive.google.com/file/d/1zsopAVKMNhw6gQEHS_ViXqk40WUfzkrc/view?usp=sharing" target="_blank" rel="noopener">
+                Principal Component Analysis
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            <a href="https://drive.google.com/file/d/1kASTVYCEFHkL6kQNvpUP2AjolGuqtweY/view?usp=sharing" target="_blank" rel="noopener">
+                Decision Tree Classifier
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+            <a href="https://drive.google.com/file/d/1bpw5euJpDkL_8jcCp-gx22wxEaO_r5KK/view?usp=sharing" target="_blank" rel="noopener">
+                KNN Classifier
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
         </div>
     </div>
 </body>
