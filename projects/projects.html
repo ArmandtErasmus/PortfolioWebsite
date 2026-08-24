@@ -3,119 +3,185 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projects</title>
+    <title>Projects · Armandt Erasmus</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
     <meta name="google" content="notranslate" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet" />
     <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #d9d9d9;
+            --muted: #b3b3b3;
+            --outline: #595959;
+            --chip-bg: rgba(82, 82, 91, 0.4);
+
+            --display: "Bebas Neue", "Arial Narrow", sans-serif;
+            --body: "Inter", system-ui, -apple-system, sans-serif;
+
+            --heading-size: clamp(2.5rem, 8vw, 4.5rem);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar { width: 0; height: 0; display: none; }
         body {
             margin: 0;
-            padding: 40px;
-            background-color: #f9f9f9;
-            font-family: Arial, sans-serif;
-            color: #333;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
+            background-color: var(--bg);
+            background-image: linear-gradient(180deg, #161618 0%, #111113 30%, #0a0a0a 1300px);
+            background-repeat: no-repeat;
+            color: var(--text);
+            font-family: var(--body);
+            font-weight: 400;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            font-size: clamp(0.875rem, 0.05vw + 0.86rem, 0.95rem);
         }
+        /* grain overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.2;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4.86' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+        ::selection { background: #d9d9d9; color: #0a0a0a; }
+        a { color: inherit; text-decoration: none; }
 
+        .wrap { max-width: 62rem; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+        /* back link */
+        .back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: 1px solid var(--outline);
+            border-radius: 4px;
+            padding: 0.28rem 0.7rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+        .back:hover { color: var(--text); border-color: var(--text); background: var(--chip-bg); }
+        .back svg { width: 13px; height: 13px; }
+        .back:hover svg { transform: translateX(-2px); }
+        .back svg { transition: transform 0.2s ease; }
+
+        /* heading */
+        .head { position: relative; margin: 2.5rem 0 2rem; }
+        .head .bracket {
+            position: absolute; right: 0; top: 0.3rem;
+            width: 1.25rem; height: 1.25rem;
+            border-top: 1px solid var(--outline);
+            border-right: 1px solid var(--outline);
+        }
+        .head h1 {
+            font-family: var(--display);
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: var(--heading-size);
+            line-height: 1;
+            letter-spacing: 0.04em;
+            margin: 0 0 0.75rem;
+        }
+        .head p { color: var(--muted); font-weight: 300; margin: 0; max-width: 60ch; }
+
+        /* grid */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            max-width: 1000px;
-            width: 100%;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.25rem;
         }
-
         .project-card {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
-            background: white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid var(--outline);
+            border-radius: 4px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
-
         .project-card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+            border-color: var(--text);
         }
-
         .project-card img {
             width: 100%;
-            height: 160px;
+            height: 200px;
             object-fit: cover;
+            display: block;
+            border-bottom: 1px solid var(--outline);
+        }
+        .project-title {
+            padding: 0.9rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 400;
+            line-height: 1.45;
+            color: var(--text);
         }
 
-        .project-title {
-            padding: 15px;
-            font-size: 1rem;
-            font-weight: bold;
-            text-align: center;
-        }
-            .home-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #ffffff;
-            padding: 10px 18px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .home-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        @media (max-width: 560px) {
+            .grid { grid-template-columns: 1fr; }
+            .project-card img { height: 180px; }
         }
     </style>
 </head>
 <body>
-    <a href="../index.html" class="home-btn">Home</a>
-    <div class="grid">
-        <a class="project-card" href="https://armandterasmus.github.io/PortfolioWebsite/projects/basic_ml_projects.html">
-            <img src="images/ml_basic.png" alt="Simple ML Projects" />
-            <div class="project-title">Simple Machine Learning Projects</div>
+    <div class="wrap">
+        <a href="../index.html" class="back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Home
         </a>
 
-        <a class="project-card" href="https://github.com/ArmandtErasmus/stochastic_modeling_multi_asset_portfolio_monte_carlo" target="_blank">
-            <img src="images/gbm_portfolio.png" alt="GBM Portfolio Modelling" />
-            <div class="project-title">Stochastic Modelling of Multi‑Asset Portfolios</div>
-        </a>
+        <div class="head">
+            <span class="bracket"></span>
+            <h1>Projects</h1>
+            
+        </div>
 
-        <a class="project-card" href="https://blackscholesframework.streamlit.app/" target="_blank">
-            <img src="images/black_scholes.jpg" alt="Options Pricing" />
-            <div class="project-title">European Options Pricing & Sensitivity Analysis</div>
-        </a>
-
-        <a class="project-card" href="https://github.com/ArmandtErasmus/logistic_regression_based_breast_cancer_classification" target="_blank">
-            <img src="images/breast_cancer.png" alt="Breast Cancer Classification" />
-            <div class="project-title">Breast Cancer Detection (Logistic Regression)</div>
-        </a>
-
-        <a class="project-card" href="https://oneperiodbinomialpricing.streamlit.app/?embed_options=light_theme" target="_blank">
-            <img src="images/binomial.png" alt="One-Period Binomial Pricing" />
-            <div class="project-title">Pricing Options with the One-Period Binomial Model</div>
-        </a>
-        
-        <a class="project-card" href="https://armandtclaimprediction.streamlit.app/?embed_options=light_theme,show_toolbar" target="_blank">
-            <img src="images/predicting-claim-amount.png" alt="Vehicle Claims Prediction using a Poisson GLM" />
-            <div class="project-title">Vehicle Claims Prediction using a Poisson GLM</div>
-        </a>
-        <a class="project-card" href="https://bornhuetter-ferguson-reserving-engine.streamlit.app/" target="_blank">
-            <img src="images/reserving.png" alt="Bornhuetter-Ferguson Based Reserving Engine" />
-            <div class="project-title">Bornhuetter-Ferguson Based Reserving Engine</div>
-        </a>
-        <a class="project-card" href="https://xvaframework.streamlit.app/" target="_blank">
-            <img src="images/xvaEngine.png" alt="XVA Engine" />
-            <div class="project-title">XVA Framework for Centrally Cleared Derivative Portfolios under Basel III/IV and EMIR</div>
-        </a>
-        <a class="project-card" href="https://hestonstochasticvolatilitymodel.streamlit.app/" target="_blank">
-            <img src="images/heston.png" alt="Heston Stochastic Volatility Model" />
-            <div class="project-title">Heston Stochastic Volatility Model for Exotic Option Pricing</div>
-        </a>
+        <div class="grid">
+            <a class="project-card" href="https://xvaframework.streamlit.app/" target="_blank" rel="noopener">
+                <img src="images/xvaEngine.png" alt="XVA Engine" />
+                <div class="project-title">XVA Framework for Centrally Cleared Derivative Portfolios under Basel III/IV and EMIR</div>
+            </a>
+            <a class="project-card" href="https://hestonstochasticvolatilitymodel.streamlit.app/" target="_blank" rel="noopener">
+                <img src="images/heston.png" alt="Heston Stochastic Volatility Model" />
+                <div class="project-title">Heston Stochastic Volatility Model for Exotic Option Pricing</div>
+            </a>
+            <a class="project-card" href="basic_ml_projects.html">
+                <img src="images/ml_basic.png" alt="Simple ML Projects" />
+                <div class="project-title">Simple Machine Learning Projects</div>
+            </a>
+            <a class="project-card" href="https://github.com/ArmandtErasmus/stochastic_modeling_multi_asset_portfolio_monte_carlo" target="_blank" rel="noopener">
+                <img src="images/gbm_portfolio.png" alt="GBM Portfolio Modelling" />
+                <div class="project-title">Stochastic Modelling of Multi&#8209;Asset Portfolios</div>
+            </a>
+            <a class="project-card" href="https://blackscholesframework.streamlit.app/" target="_blank" rel="noopener">
+                <img src="images/black_scholes.jpg" alt="Options Pricing" />
+                <div class="project-title">European Options Pricing &amp; Sensitivity Analysis</div>
+            </a>
+            <a class="project-card" href="https://github.com/ArmandtErasmus/logistic_regression_based_breast_cancer_classification" target="_blank" rel="noopener">
+                <img src="images/breast_cancer.png" alt="Breast Cancer Classification" />
+                <div class="project-title">Breast Cancer Detection (Logistic Regression)</div>
+            </a>
+            <a class="project-card" href="https://oneperiodbinomialpricing.streamlit.app/?embed_options=light_theme" target="_blank" rel="noopener">
+                <img src="images/binomial.png" alt="One-Period Binomial Pricing" />
+                <div class="project-title">Pricing Options with the One-Period Binomial Model</div>
+            </a>
+            <a class="project-card" href="https://armandtclaimprediction.streamlit.app/?embed_options=light_theme,show_toolbar" target="_blank" rel="noopener">
+                <img src="images/predicting-claim-amount.png" alt="Vehicle Claims Prediction using a Poisson GLM" />
+                <div class="project-title">Vehicle Claims Prediction using a Poisson GLM</div>
+            </a>
+            <a class="project-card" href="https://bornhuetter-ferguson-reserving-engine.streamlit.app/" target="_blank" rel="noopener">
+                <img src="images/reserving.png" alt="Bornhuetter-Ferguson Based Reserving Engine" />
+                <div class="project-title">Bornhuetter-Ferguson Based Reserving Engine</div>
+            </a>
+        </div>
     </div>
 </body>
 </html>
