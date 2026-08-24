@@ -1,103 +1,495 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Armandt Erasmus | Portfolio</title>
-    <link rel="icon" type="image/png" href="projects/images/favicon.png">
-    <meta name="google" content="notranslate">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Armandt Erasmus</title>
+    <meta name="description" content="Armandt Erasmus. Actuarial analyst working across pricing, risk and machine learning." />
+    <link rel="icon" type="image/png" href="projects/images/favicon.png" />
+    <meta name="google" content="notranslate" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet" />
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f9f9f9;
-            font-family: Arial, sans-serif;
-            color: #333; 
-            box-sizing: border-box;
-        }
-        .center-text {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        :root {
+            --bg: #0a0a0a;
+            --text: #d9d9d9;
+            --muted: #b3b3b3;
+            --outline: #595959;
+            --chip-bg: rgba(82, 82, 91, 0.4);
+
+            --display: "Bebas Neue", "Arial Narrow", sans-serif;
+            --body: "Inter", system-ui, -apple-system, sans-serif;
+
+            --name-size: clamp(3rem, 10vw, 5.75rem);
+            --heading-size: clamp(2rem, 6vw, 3.25rem);
         }
 
-        .center-text .subtitle {
-            font-size: 1rem;        
-            color: #555;            
-            margin-bottom: 15px;    
-            font-weight: 400;       
-            text-align: center;     
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            background-image: linear-gradient(180deg, #161618 0%, #111113 30%, #0a0a0a 1300px);
+            background-repeat: no-repeat;
+            color: var(--text);
+            font-family: var(--body);
+            font-weight: 400;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            font-size: clamp(0.875rem, 0.05vw + 0.86rem, 0.95rem);
         }
-        
-        .center-text .name {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            font-weight: bold;
+        /* grain overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.2;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250 250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4.86' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
-        .center-text .links {
-            font-size: 1.2rem;
+        ::selection { background: #d9d9d9; color: #0a0a0a; }
+        a { color: inherit; text-decoration: none; }
+
+        .center { max-width: 46rem; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* ===== hero ===== */
+        header.hero {
+            display: flex;
+            flex-direction: column;
         }
-        .center-text .links a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #333;
-            
+
+        /* ===== scroll stage: pin the main part, shrink it on scroll ===== */
+        :root { --p: 1; --scale-amt: 0.18; }
+        @media (max-width: 560px) { :root { --scale-amt: 0.09; } }
+        .main-part { width: 100%; padding-top: 3rem; }
+        html.anim .stage { height: 170vh; }
+        html.anim .stage-inner {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            overflow: clip;
+            padding-bottom: 2.5rem;
         }
-        .center-text .links a:hover {
-            color: #878787; 
+        html.anim .main-part {
+            padding-top: 0;
+            transform: translateY(calc(var(--rise, 0px) * (var(--p) - 1))) scale(calc(1 + var(--scale-amt) * (1 - var(--p))));
+            transform-origin: center center;
+            will-change: transform;
         }
-        .actuarial-edge-link {
-            color: #6865f2 !important;        
-            margin-top: 20px !important;      
-            display: inline-block !important;  
-            text-decoration: none !important;
-            font-weight: 500 !important;    
+        @media (prefers-reduced-motion: reduce) {
+            html.anim .stage { height: auto; }
+            html.anim .stage-inner { position: static; height: auto; display: block; overflow: visible; }
+            html.anim .main-part { transform: none; padding-top: 3rem; }
         }
-        
-        .actuarial-edge-link:hover {
-            color: #9d9cf8 !important; 
+
+        /* scroll-down cue (only shown while the hero is enlarged) */
+        .scroll-cue {
+            position: fixed;
+            left: 50%;
+            bottom: 1.4rem;
+            transform: translateX(-50%);
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--muted);
+            font-size: 0.6rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            pointer-events: none;
+            opacity: calc(1 - var(--p));
+            transition: opacity 0.25s ease;
         }
-        
+        html.anim .scroll-cue { display: flex; }
+        .scroll-cue svg { width: 18px; height: 18px; animation: cue-bounce 1.8s ease-in-out infinite; }
+        @keyframes cue-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html.anim .scroll-cue { display: none; }
+        }
+        .name {
+            font-family: var(--display);
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: var(--name-size);
+            line-height: 0.92;
+            letter-spacing: 0.04em;
+            margin: 0;
+        }
+        .role {
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            font-size: clamp(0.95rem, 1.6vw, 1.2rem);
+            margin: 0.5rem 0 0;
+        }
+        .location {
+            color: var(--muted);
+            font-weight: 300;
+            font-size: 0.85rem;
+            margin-top: 0.2rem;
+        }
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            max-width: 74ch;
+            font-weight: 300;
+        }
+        .links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: 1px solid var(--outline);
+            border-radius: 4px;
+            padding: 0.28rem 0.7rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+        .links a:hover { color: var(--text); border-color: var(--text); background: var(--chip-bg); }
+        .links a svg { width: 13px; height: 13px; }
+
+        /* ===== content ===== */
+        .content { padding-bottom: 4rem; margin-top: 2.75rem; }
+        .content > * + * { margin-top: 2.75rem; }
+
+        .about {
+            font-weight: 300;
+            color: var(--text);
+            max-width: 74ch;
+            margin: 1.5rem 0 0;
+        }
+
+        section { position: relative; }
+        .bracket {
+            position: absolute;
+            right: 0;
+            top: 0.3rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-top: 1px solid var(--outline);
+            border-right: 1px solid var(--outline);
+        }
+        .heading {
+            font-family: var(--display);
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: var(--heading-size);
+            line-height: 1;
+            letter-spacing: 0.04em;
+            margin: 0 0 1.1rem;
+        }
+
+        /* skills */
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        .skills li {
+            background: var(--chip-bg);
+            border: 1px solid var(--outline);
+            border-radius: 4px;
+            padding: 0.2rem 0.65rem;
+            font-size: 0.8rem;
+            font-weight: 300;
+            letter-spacing: 0.03em;
+        }
+
+        /* experience + education */
+        .entries { list-style: none; padding: 0; margin: 0; }
+        .entries > li + li { margin-top: 2rem; }
+        .entry-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: nowrap;
+            margin-bottom: 0.3rem;
+        }
+        .entry-title {
+            font-size: clamp(1rem, 1.4vw, 1.15rem);
+            font-weight: 600;
+            margin: 0;
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        .dates {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 0.4rem;
+            flex: 0 0 auto;
+        }
+        .dates span {
+            font-size: 0.72rem;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        .org {
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--muted);
+            margin: 0 0 0.6rem;
+        }
+        .entry-body { font-weight: 300; }
+        .entry-body p { margin: 0 0 0.5rem; }
+        .entry-body p:last-child { margin-bottom: 0; }
+        .bullets { margin: 0; padding-left: 1.1rem; }
+        .bullets li { margin-bottom: 0.5rem; }
+        .bullets li:last-child { margin-bottom: 0; }
+        .bullets li::marker { color: var(--outline); }
+        .entry-body a { color: var(--text); border-bottom: 1px solid var(--outline); }
+        .entry-body a:hover { border-color: var(--text); }
+
+        /* keep scrolling, hide the scrollbar */
+        html { scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar { width: 0; height: 0; display: none; }
     </style>
 </head>
 <body>
-    <div class="center-text">
-        <div class="name">Armandt Erasmus</div>
-        <div class="links">
-            <a href="https://www.linkedin.com/in/armandterasmus/" target="_blank">LinkedIn</a>
-            <a href="https://drive.google.com/file/d/1nfuFQpEhZhR5tnPJjlGuxy0tlryx43Lo/view?usp=sharing" target="_blank">Resume</a>
-            <a href="https://github.com/ArmandtErasmus" target="_blank">GitHub</a>
-            <a href="https://armandterasmus.github.io/PortfolioWebsite/projects/projects.html">Projects</a>
+    <main>
+        <div class="stage" id="stage">
+          <div class="stage-inner">
+            <div class="main-part center">
+              <header class="hero">
+            <h1 class="name">Armandt Erasmus</h1>
+            <p class="role">Actuarial Analyst</p>
+            <p class="location">Gauteng, South Africa</p>
+            <nav class="links">
+                <a href="https://github.com/ArmandtErasmus" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C18 4.6 19 4.9 19 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+                    GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/armandterasmus/" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+                    LinkedIn
+                </a>
+                <a href="projects/projects.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                    Projects
+                </a>
+                <a href="extras/Armandt_Erasmus_Resume.pdf" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>
+                    Resume
+                </a>
+                <a href="astrophotography.html">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.09 4.26L18.8 8l-3.4 3.32.8 4.68L12 13.8 7.8 16l.8-4.68L5.2 8l4.71-.74z"/></svg>
+                    Astrophotography
+                </a>
+            </nav>
+              </header>
+              <p class="about">
+                Actuarial risk professional completing a dual BScHons in Physics and Financial Engineering, building scalable actuarial software and machine learning solutions to support risk management and data-driven decision-making.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="links">
-            <a href="https://www.theactuarialedge.com" target="_blank" class="actuarial-edge-link">The Actuarial Edge</a>
+
+        <div class="content center">
+            <section>
+                <span class="bracket"></span>
+                <h2 class="heading">Skills</h2>
+                <ul class="skills">
+                    <li>Python</li>
+                    <li>R (Shiny)</li>
+                    <li>C++</li>
+                    <li>SQL</li>
+                    <li>PostgreSQL</li>
+                    <li>MySQL</li>
+                    <li>PL/SQL</li>
+                    <li>MATLAB</li>
+                    <li>SAS</li>
+                    <li>Excel</li>
+                    <li>VBA</li>
+                    <li>NumPy</li>
+                    <li>Pandas</li>
+                    <li>Scikit-Learn</li>
+                    <li>TensorFlow</li>
+                    <li>PyTorch</li>
+                    <li>PySpark</li>
+                    <li>Databricks</li>
+                    <li>Power BI</li>
+                    <li>Django</li>
+                    <li>Docker</li>
+                    <li>Git</li>
+                    <li>Azure</li>
+                    <li>AWS</li>
+                </ul>
+            </section>
+
+            <section>
+                <span class="bracket"></span>
+                <h2 class="heading">Experience</h2>
+                <ul class="entries">
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">Actuarial Analyst</h3>
+                            <div class="dates"><span>Feb 2026 &mdash; Present</span></div>
+                        </div>
+                        <p class="org">MiWay Insurance Limited</p>
+                        <ul class="entry-body bullets">
+                            <li>Led the design and enterprise rollout of a production document-forensics platform, coordinating 14+ stakeholders to deliver a solution used by over 75 users across 3 business units, replacing manual document verification and generating an estimated R7 million annual benefit.</li>
+                            <li>Engineered a modular fraud engine with 24 document forensic modules, probabilistic evidence scoring and automated tamper detection, producing investigator-ready fraud assessments in under one second per document.</li>
+                            <li>Owned the full software development lifecycle, architecting secure Django/SQL Server infrastructure, enterprise RBAC, fail-safe data integration with a 1.8M-record warehouse and automated deployment for a scalable production platform.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">Actuarial Analyst</h3>
+                            <div class="dates"><span>Jul 2025 &mdash; Feb 2026</span></div>
+                        </div>
+                        <p class="org">SolveCo Actuarial Services</p>
+                        <ul class="entry-body bullets">
+                            <li>Built a centralised multi-asset financial reporting engine (VBA) covering 50+ portfolios and 10+ asset classes, standardising valuations, fair-value movements, cash-flow timing, and FX attribution to deliver IFRS, US GAAP, and GIPS-aligned TWR/MWR performance reporting.</li>
+                            <li>Developed a Python-based model validation framework that automated data preparation and testing for long-term insurance pricing models, improving governance and auditability while reducing testing timelines by 50%.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">Machine Learning Engineer</h3>
+                            <div class="dates"><span>Jul 2023 &mdash; Jul 2024</span></div>
+                        </div>
+                        <p class="org">Google DSC</p>
+                        <ul class="entry-body bullets">
+                            <li>Led the Google Developer Student Clubs at the University of Pretoria, designing and delivering applied machine learning workshops focused on end-to-end modelling pipelines, from data preprocessing and feature analysis to model training and deployment, using Python and Streamlit for real-world business use cases.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <span class="bracket"></span>
+                <h2 class="heading">Education</h2>
+                <ul class="entries">
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">BScHons in Physics Specialising Financial Engineering</h3>
+                            <div class="dates"><span>Graduation: Dec 2026</span></div>
+                        </div>
+                        <p class="org">University of Pretoria</p>
+                        <div class="entry-body">
+                            <p>Research Focus: <a href="extras/On_the_Theory_of_Non_Commutative_Optimal_Transport_with_Applications_in_Quantitative_Risk_Modelling.pdf" target="_blank" rel="noopener">On the Theory of Non-Commutative Optimal Transport with Applications in Quantitative Risk Modelling</a>.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">BSc in Physics</h3>
+                            <div class="dates"><span>Graduated: Dec 2024</span></div>
+                        </div>
+                        <p class="org">University of Pretoria</p>
+                    </li>
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">Institute and Faculty of Actuaries</h3>
+                            <div class="dates"><span></span></div>
+                        </div>
+                        <p class="org">Actuarial Science Student Member</p>
+                        <div class="entry-body">
+                            <p>Actuarial exams passed: CB1, CB2, CB3, CM1, CS1, CP3, PSC</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <span class="bracket"></span>
+                <h2 class="heading">Certifications</h2>
+                <ul class="entries">
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">Chartered Financial Analyst (CFA) Level I</h3>
+                        </div>
+                        <p class="org">CFA Institute</p>
+                    </li>
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">Financial Modeling &amp; Valuation Analyst (FMVA&reg;)</h3>
+                        </div>
+                        <p class="org">Corporate Finance Institute</p>
+                    </li>
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">Capital Markets &amp; Securities Analyst (CMSA&reg;)</h3>
+                        </div>
+                        <p class="org">Corporate Finance Institute</p>
+                    </li>
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">IFRS 17: Insurance Contracts</h3>
+                        </div>
+                        <p class="org">AICPA &amp; CIMA</p>
+                    </li>
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">Data Science Professional Certificate</h3>
+                        </div>
+                        <p class="org">IBM</p>
+                    </li>
+                    <li>
+                        <div class="entry-head">
+                            <h3 class="entry-title">Project Management Certificate</h3>
+                        </div>
+                        <p class="org">Google</p>
+                    </li>
+                </ul>
+            </section>
         </div>
-    </div>
+        <div class="scroll-cue" aria-hidden="true">
+            <span>Scroll</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+    </main>
+
+    <script>
+    (function () {
+        var html = document.documentElement;
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var stage = document.getElementById("stage");
+        if (!stage) return;
+        html.classList.add("anim");
+        html.style.setProperty("--p", "0");
+        var mainPart = stage.querySelector(".main-part");
+        var ticking = false;
+        function measure() {
+            // upward shift (px) that moves the bottom-anchored block to the vertical centre
+            var padBottom = 40; // matches .stage-inner padding-bottom (2.5rem)
+            var rise = Math.max((window.innerHeight - mainPart.offsetHeight) / 2 - padBottom, 0);
+            html.style.setProperty("--rise", rise + "px");
+        }
+        function update() {
+            ticking = false;
+            var scrub = stage.offsetHeight - window.innerHeight;
+            if (scrub <= 0) { html.style.setProperty("--p", "1"); return; }
+            var p = Math.min(Math.max(-stage.getBoundingClientRect().top / scrub, 0), 1);
+            html.style.setProperty("--p", p.toFixed(4));
+        }
+        function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        window.addEventListener("resize", function () { measure(); update(); });
+        window.addEventListener("load", function () { measure(); update(); });
+        measure();
+        update();
+    })();
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
