@@ -5,105 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Armandt Erasmus | Portfolio</title>
     <meta name="google" content="notranslate">
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            padding: 0;
+            padding: 24px;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #f9f9f9;
             font-family: Arial, sans-serif;
-            color: #333; 
-            box-sizing: border-box;
+            color: #333;
         }
+
         .center-text {
             text-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
         }
 
-        .center-text .subtitle {
-            font-size: 1rem;        
-            color: #555;            
-            margin-bottom: 15px;    
-            font-weight: 400;       
-            text-align: center;     
-        }
-        
-        .center-text .name {
+        .name {
             font-size: 2rem;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
             font-weight: bold;
         }
-        .center-text .links {
-            font-size: 1.2rem;
-        }
-        .center-text .links a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #333;
-            
-        }
-        .center-text .links a:hover {
-            color: #878787; 
-        }
 
-        .center-text .links {
+        .links {
             display: flex;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px 30px;
+            font-size: 1.2rem;
         }
-        
-        .center-text .links a {
-            margin: 0;
+
+        .links a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.2s ease;
         }
-        
-        .center-text .links .actuarial-edge-link {
+
+        .links a:hover {
+            color: #878787;
+        }
+
+        .actuarial-edge-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            color: #333;
-            font-size: 1rem;
-            font-weight: 400;
-            text-decoration: none;
             transition: opacity 0.2s ease;
+        }
+
+        .actuarial-edge-link img {
+            display: block;
+            height: 36px;
+            width: auto;
+            max-width: 100%;
+        }
+
+        .actuarial-edge-link:hover {
+            opacity: 0.7;
+        }
+
+        .actuarial-edge-link {
+            flex-basis: 100%;
+            justify-content: center;
+            margin-top: 8px;
         }
         
         .actuarial-edge-link img {
-            width: 36px;
-            height: 36px;
-            object-fit: contain;
+            border-radius: 8px;
         }
-        
-        .center-text .links .actuarial-edge-link:hover {
-            color: #333;
-            opacity: 0.7;
-        }
+
         
     </style>
 </head>
 <body>
     <div class="center-text">
         <div class="name">Armandt Erasmus</div>
+
         <div class="links">
-            <a href="https://www.linkedin.com/in/armandterasmus/" target="_blank">LinkedIn</a>
-            <a href="extras/Armandt_Erasmus_Resume.pdf" target="_blank">Resume</a>
-            <a href="https://github.com/ArmandtErasmus" target="_blank">GitHub</a>
+            <a
+                href="https://www.linkedin.com/in/armandterasmus/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >LinkedIn</a>
+
+            <a
+                href="extras/Armandt_Erasmus_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+            >Resume</a>
+
+            <a
+                href="https://github.com/ArmandtErasmus"
+                target="_blank"
+                rel="noopener noreferrer"
+            >GitHub</a>
+
             <a href="projects/projects.html">Projects</a>
+
             <a
                 href="https://www.theactuarialedge.com/"
                 class="actuarial-edge-link"
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                <img src="extras/actuarial-edge-logo.png" alt="">
-                <span>theactuarialedge.com</span>
+                <img
+                    src="extras/actuarial-edge-logo.png"
+                    alt="The Actuarial Edge"
+                >
             </a>
         </div>
     </div>
